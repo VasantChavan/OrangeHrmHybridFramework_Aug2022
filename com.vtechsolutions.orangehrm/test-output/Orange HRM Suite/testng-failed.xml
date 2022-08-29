@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Failed suite [Orange HRM Suite]" guice-stage="DEVELOPMENT">
+  <test thread-count="5" name="Orange HRM Test(failed)">
+    <parameter name="brname" value="Firefox"/>
+    <classes>
+      <class name="com.vtechsolutions.orangehrm.testcases.LoginTC_01">
+        <methods>
+          <include name="init"/>
+          <include name="loginTC_01"/>
+          <include name="verifyLoginPageTitleTC"/>
+          <include name="verifyOrangeHrmLogoTC"/>
+          <include name="setUp"/>
+          <include name="tearDown"/>
+        </methods>
+      </class> <!-- com.vtechsolutions.orangehrm.testcases.LoginTC_01 -->
+    </classes>
+  </test> <!-- Orange HRM Test(failed) -->
+</suite> <!-- Failed suite [Orange HRM Suite] -->
