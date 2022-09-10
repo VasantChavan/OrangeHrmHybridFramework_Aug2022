@@ -10,10 +10,13 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
 
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
+import com.aventstack.extentreports.reporter.configuration.Theme;
 import com.vtechsolutions.orangehrm.utility.ConfigDataProvider;
 import com.vtechsolutions.orangehrm.utility.ConstantVariable;
 import com.vtechsolutions.orangehrm.utility.ExcelDataProvider;
@@ -21,18 +24,38 @@ import com.vtechsolutions.orangehrm.utility.ExcelDataProvider;
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class TestBase {
+	
+	
 
 	public WebDriver driver;
 	
 	public static ConfigDataProvider configDataProvider;
 	public static ExcelDataProvider excelDataProvider;
-	
+	public static ExtentHtmlReporter extentHtmlReporter;
+	public static ExtentReports extentReports;
+	public static ExtentTest extentTest;
 	
 	@BeforeSuite
 	public void init()
 	{
 		configDataProvider = new ConfigDataProvider(ConstantVariable.configDataPath);
 		excelDataProvider = new ExcelDataProvider(ConstantVariable.excelPath);
+		
+		extentHtmlReporter =new ExtentHtmlReporter("./Reports/extentReports.html");
+		extentHtmlReporter.config().setDocumentTitle("Automation Test Reports");
+		extentHtmlReporter.config().setReportName("RT Test Reports");
+		extentHtmlReporter.config().setTheme(Theme.DARK);
+		
+		extentReports = new ExtentReports();
+		extentReports.attachReporter(extentHtmlReporter);
+		
+		extentReports.setSystemInfo("Hostname","Local Host");
+		extentReports.setSystemInfo("OS","Windows");
+		extentReports.setSystemInfo("Browser","Chrome");
+		extentReports.setSystemInfo("TE","Ravi");
+		extentReports.setSystemInfo("Test Cases","RT");
+		
+		
 	}
 
 	@BeforeMethod
@@ -74,6 +97,12 @@ public class TestBase {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	@AfterTest
+	public void extentFlush()
+	{
+		extentReports.flush();		
 	}
 
 }
